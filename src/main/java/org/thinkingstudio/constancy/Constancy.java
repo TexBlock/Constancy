@@ -1,4 +1,4 @@
-package org.thinkingstudio.continuity;
+package org.thinkingstudio.constancy;
 
 import me.pepperbell.continuity.client.ContinuityClient;
 import me.pepperbell.continuity.client.config.ModMenuApiImpl;
@@ -11,9 +11,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.network.NetworkConstants;
 
-@Mod("continuity")
-public class ContinuityForge {
-    public ContinuityForge() {
+@Mod("constancy")
+public class Constancy {
+
+    @SuppressWarnings("removal")
+    public Constancy() {
         if (FMLLoader.getDist().isClient()) {
             IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
             ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));

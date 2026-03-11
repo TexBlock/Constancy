@@ -46,7 +46,7 @@ import me.pepperbell.continuity.client.util.biome.BiomeRetriever;
 import me.pepperbell.continuity.impl.client.ProcessingDataKeyRegistryImpl;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.thinkingstudio.continuity.ported.resource.ResourceManagerHelper;
+import org.thinkingstudio.constancy.ported.resource.ResourceManagerHelper;
 
 public class ContinuityClient {
 	public static final String ID = "continuity";
@@ -271,6 +271,7 @@ public class ContinuityClient {
 		};
 	}
 
+	@SuppressWarnings("removal")
 	public static Identifier asId(String path) {
 		return new Identifier(ID, path);
 	}

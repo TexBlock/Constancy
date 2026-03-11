@@ -21,9 +21,10 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EmptyBlockView;
-import org.thinkingstudio.continuity.ported.resource.ResourceManagerHelper;
+import org.thinkingstudio.constancy.ported.resource.ResourceManagerHelper;
 
 public final class CustomBlockLayers {
+	@SuppressWarnings("removal")
 	public static final Identifier LOCATION = new Identifier("optifine/block.properties");
 
 	@SuppressWarnings("unchecked")

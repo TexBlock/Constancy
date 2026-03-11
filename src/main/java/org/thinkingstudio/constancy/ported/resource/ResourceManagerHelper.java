@@ -1,4 +1,4 @@
-package org.thinkingstudio.continuity.ported.resource;
+package org.thinkingstudio.constancy.ported.resource;
 
 import net.minecraft.resource.*;
 import net.minecraft.text.Text;

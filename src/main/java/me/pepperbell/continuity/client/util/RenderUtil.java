@@ -21,7 +21,7 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
-import org.thinkingstudio.continuity.ported.resource.ResourceManagerHelper;
+import org.thinkingstudio.constancy.ported.resource.ResourceManagerHelper;
 
 public final class RenderUtil {
 	private static final BlockColors BLOCK_COLORS = MinecraftClient.getInstance().getBlockColors();

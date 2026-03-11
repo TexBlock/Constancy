@@ -4,17 +4,31 @@ license = "LGPL-3.0-only"
 issueTrackerURL = "https://github.com/PepperCode1/Continuity/issues"
 
 [[mods]]
-modId = "continuity"
+modId = "constancy"
 version = "${version}"
-displayName = "Continuity"
-description = "Continuity is a Fabric mod that allows resource packs that use the OptiFine connected textures format, OptiFine emissive textures format (only for blocks and item models), or OptiFine custom block layers format to work without OptiFine."
+displayName = "Constancy"
+description = '''
+Continuity unofficial Forge port.
+Constancy is a Forge mod that allows resource packs that use the OptiFine connected textures format, OptiFine emissive textures format (only for blocks and item models), or OptiFine custom block layers format to work without OptiFine.
+'''
 logoFile = "assets/continuity/icon.png"
 logoBlur = false
 authors = "PepperCode1"
 displayURL = "https://modrinth.com/mod/continuity"
-displayTest = "IGNORE_ALL_VERSION"
 
-[[dependencies.continuity]]
+[[mods]]
+modId = "continuity"
+version = "${version}"
+displayName = "Continuity (Stub)"
+description = '''
+Constancy stub-mod for compatibility with other mods.
+Continuity is a Fabric mod that allows resource packs that use the OptiFine connected textures format, OptiFine emissive textures format (only for blocks and item models), or OptiFine custom block layers format to work without OptiFine.
+'''
+logoFile = "assets/continuity/icon.png"
+logoBlur = false
+authors = "PepperCode1"
+
+[[dependencies.constancy]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.1]"
