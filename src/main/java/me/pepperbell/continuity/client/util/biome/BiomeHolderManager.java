@@ -5,12 +5,14 @@ import java.util.Set;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.common.MinecraftForge;
 
 public final class BiomeHolderManager {
 	private static final Map<Identifier, BiomeHolder> HOLDER_CACHE = new Object2ObjectOpenHashMap<>();
@@ -27,10 +29,18 @@ public final class BiomeHolderManager {
 	}
 
 	public static void init() {
-		ClientPlayConnectionEvents.JOIN.register(((handler, sender, client) -> {
-			registryManager = handler.getRegistryManager();
+//		ClientPlayConnectionEvents.JOIN.register(((handler, sender, client) -> {
+//			registryManager = handler.getRegistryManager();
+//			refreshHolders();
+//		}));
+		MinecraftForge.EVENT_BUS.<ClientPlayerNetworkEvent.LoggingIn>addListener(event -> {
+			if (MinecraftClient.getInstance().world == null) {
+				return;
+			}
+
+			registryManager = event.getPlayer().getWorld().getRegistryManager();
 			refreshHolders();
-		}));
+		});
 	}
 
 	public static void refreshHolders() {

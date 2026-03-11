@@ -1,8 +1,7 @@
 package me.pepperbell.continuity.client.util;
 
-import java.util.Collection;
-import java.util.List;
-
+import net.minecraft.resource.SynchronousResourceReloader;
+import net.minecraftforge.eventbus.api.IEventBus;
 import org.jetbrains.annotations.Nullable;
 
 import me.pepperbell.continuity.client.ContinuityClient;
@@ -11,9 +10,6 @@ import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -25,6 +21,7 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
+import org.thinkingstudio.continuity.ported.resource.ResourceManagerHelper;
 
 public final class RenderUtil {
 	private static final BlockColors BLOCK_COLORS = MinecraftClient.getInstance().getBlockColors();
@@ -64,13 +61,13 @@ public final class RenderUtil {
 		return blockAtlasSpriteFinder;
 	}
 
-	public static class ReloadListener implements SimpleSynchronousResourceReloadListener {
+	public static class ReloadListener implements SynchronousResourceReloader {
 		public static final Identifier ID = ContinuityClient.asId("render_util");
-		public static final List<Identifier> DEPENDENCIES = List.of(ResourceReloadListenerKeys.MODELS);
+//		public static final List<Identifier> DEPENDENCIES = List.of(ResourceReloadListenerKeys.MODELS);
 		private static final ReloadListener INSTANCE = new ReloadListener();
 
-		public static void init() {
-			ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(INSTANCE);
+		public static void init(IEventBus modEventBus) {
+			ResourceManagerHelper.registerReloadListener(modEventBus, ResourceType.CLIENT_RESOURCES, INSTANCE);
 		}
 
 		@Override
@@ -78,14 +75,14 @@ public final class RenderUtil {
 			blockAtlasSpriteFinder = SpriteFinder.get(MODEL_MANAGER.getAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE));
 		}
 
-		@Override
-		public Identifier getFabricId() {
-			return ID;
-		}
-
-		@Override
-		public Collection<Identifier> getFabricDependencies() {
-			return DEPENDENCIES;
-		}
+//		@Override
+//		public Identifier getFabricId() {
+//			return ID;
+//		}
+//
+//		@Override
+//		public Collection<Identifier> getFabricDependencies() {
+//			return DEPENDENCIES;
+//		}
 	}
 }

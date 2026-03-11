@@ -3,9 +3,6 @@ loaderVersion = "*"
 license = "LGPL-3.0-only"
 issueTrackerURL = "https://github.com/PepperCode1/Continuity/issues"
 
-[properties]
-"connector:placeholder" = true
-
 [[mods]]
 modId = "continuity"
 version = "${version}"
@@ -21,13 +18,3 @@ displayTest = "IGNORE_ALL_VERSION"
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.1]"
-
-[[dependencies.continuity]]
-modId = "connectormod"
-mandatory = true
-versionRange = "*"
-
-[[dependencies.continuity]]
-modId = "fabric_api"
-mandatory = true
-versionRange = "*"

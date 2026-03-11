@@ -1,5 +1,7 @@
 package me.pepperbell.continuity.client;
 
+import net.minecraft.resource.ResourceType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,32 +44,32 @@ import me.pepperbell.continuity.client.util.RenderUtil;
 import me.pepperbell.continuity.client.util.biome.BiomeHolderManager;
 import me.pepperbell.continuity.client.util.biome.BiomeRetriever;
 import me.pepperbell.continuity.impl.client.ProcessingDataKeyRegistryImpl;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.thinkingstudio.continuity.ported.resource.ResourceManagerHelper;
 
-public class ContinuityClient implements ClientModInitializer {
+public class ContinuityClient {
 	public static final String ID = "continuity";
 	public static final String NAME = "Continuity";
 	public static final Logger LOGGER = LoggerFactory.getLogger(NAME);
 
-	@Override
-	public void onInitializeClient() {
-		ProcessingDataKeyRegistryImpl.INSTANCE.init();
+	public void onInitializeClient(IEventBus modEventBus) {
+
+		ProcessingDataKeyRegistryImpl.INSTANCE.init(modEventBus);
 		BiomeHolderManager.init();
 		BiomeRetriever.init();
 		ProcessingDataKeys.init();
-		ModelWrappingHandler.init();
-		RenderUtil.ReloadListener.init();
-		CustomBlockLayers.ReloadListener.init();
+		ModelWrappingHandler.init(modEventBus);
+		RenderUtil.ReloadListener.init(modEventBus);
+		CustomBlockLayers.ReloadListener.init(modEventBus);
 
-		FabricLoader.getInstance().getModContainer(ID).ifPresent(container -> {
-			ResourceManagerHelper.registerBuiltinResourcePack(asId("default"), container, Text.translatable("resourcePack.continuity.default.name"), ResourcePackActivationType.NORMAL);
-			ResourceManagerHelper.registerBuiltinResourcePack(asId("glass_pane_culling_fix"), container, Text.translatable("resourcePack.continuity.glass_pane_culling_fix.name"), ResourcePackActivationType.NORMAL);
-		});
+//		FabricLoader.getInstance().getModContainer(ID).ifPresent(container -> {
+//			ResourceManagerHelper.registerBuiltinResourcePack(asId("default"), container, Text.translatable("resourcePack.continuity.default.name"), ResourcePackActivationType.NORMAL);
+//			ResourceManagerHelper.registerBuiltinResourcePack(asId("glass_pane_culling_fix"), container, Text.translatable("resourcePack.continuity.glass_pane_culling_fix.name"), ResourcePackActivationType.NORMAL);
+//		});
+
+		ResourceManagerHelper.registerBuiltinResourcePack(ID, modEventBus, asId("default"), Text.translatable("resourcePack.continuity.default.name"), ResourceType.CLIENT_RESOURCES);
+		ResourceManagerHelper.registerBuiltinResourcePack(ID, modEventBus, asId("glass_pane_culling_fix"), Text.translatable("resourcePack.continuity.glass_pane_culling_fix.name"), ResourceType.CLIENT_RESOURCES);
 
 		CtmLoaderRegistry registry = CtmLoaderRegistry.get();
 		CtmLoader<?> loader;

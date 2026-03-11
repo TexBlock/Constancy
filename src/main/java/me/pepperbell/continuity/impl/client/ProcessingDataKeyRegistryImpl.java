@@ -6,13 +6,14 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.jetbrains.annotations.Nullable;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import me.pepperbell.continuity.api.client.ProcessingDataKey;
 import me.pepperbell.continuity.api.client.ProcessingDataKeyRegistry;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.util.Identifier;
 
 public final class ProcessingDataKeyRegistryImpl implements ProcessingDataKeyRegistry {
@@ -54,8 +55,10 @@ public final class ProcessingDataKeyRegistryImpl implements ProcessingDataKeyReg
 		return registeredAmount;
 	}
 
-	public void init() {
-		ClientLifecycleEvents.CLIENT_STARTED.register(client -> frozen = true);
+	public void init(IEventBus modEventBus) {
+		modEventBus.<FMLClientSetupEvent>addListener(event -> {
+			event.enqueueWork(() -> frozen = true);
+		});
 	}
 
 	public List<ProcessingDataKey<?>> getAllResettable() {

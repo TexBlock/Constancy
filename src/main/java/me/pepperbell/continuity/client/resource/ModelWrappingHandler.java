@@ -1,5 +1,9 @@
 package me.pepperbell.continuity.client.resource;
 
+import com.google.common.collect.ImmutableSet;
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,8 +12,6 @@ import com.google.common.collect.ImmutableMap;
 import me.pepperbell.continuity.client.mixinterface.ModelLoaderExtension;
 import me.pepperbell.continuity.client.model.CtmBakedModel;
 import me.pepperbell.continuity.client.model.EmissiveBakedModel;
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.block.BlockModels;
@@ -18,6 +20,9 @@ import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+
+import java.util.Map;
+import java.util.Set;
 
 public class ModelWrappingHandler {
 	private final boolean wrapCtm;
@@ -69,16 +74,17 @@ public class ModelWrappingHandler {
 	}
 
 	@ApiStatus.Internal
-	public static void init() {
-		ModelLoadingPlugin.register(pluginCtx -> {
-			pluginCtx.modifyModelAfterBake().register(ModelModifier.WRAP_LAST_PHASE, (model, ctx) -> {
-				ModelLoader modelLoader = ctx.loader();
-				ModelWrappingHandler wrappingHandler = ((ModelLoaderExtension) modelLoader).continuity$getModelWrappingHandler();
-				if (wrappingHandler != null) {
-					return wrappingHandler.wrap(model, ctx.id());
+	public static void init(IEventBus modEventBus) {
+		modEventBus.<ModelEvent.ModifyBakingResult>addListener(event -> {
+			ModelLoader modelLoader = event.getModelBakery();
+			ModelWrappingHandler wrappingHandler = ((ModelLoaderExtension) modelLoader).continuity$getModelWrappingHandler();
+			if (wrappingHandler != null) {
+				Map<Identifier, BakedModel> bakedModels = event.getModels();
+				Set<Identifier> keys = ImmutableSet.copyOf(event.getModels().keySet());
+				for (Identifier modelId : keys) {
+					bakedModels.put(modelId, wrappingHandler.wrap(bakedModels.get(modelId), modelId));
 				}
-				return model;
-			});
+			}
 		});
 	}
 }
