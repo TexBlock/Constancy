@@ -4,7 +4,7 @@ plugins {
 	id 'maven-publish'
 }
 
-version = project.mod_version + '+' + project.mod_minecraft_version + '.forge' + getExtraBuildMetadata()
+version = project.mod_version + '+' + project.minecraft_version + '.forge' + getExtraBuildMetadata()
 group = project.maven_group
 
 base {
@@ -29,10 +29,6 @@ repositories {
 		url 'https://api.modrinth.com/maven'
 	}
 	maven {
-		name 'VRAM'
-		url 'https://maven.vram.io'
-	}
-	maven {
 		name 'Shedaniel'
 		url 'https://maven.shedaniel.me'
 	}
@@ -54,24 +50,14 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 
-	// Fabric API
-	//modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	modImplementation "dev.su5ed.sinytra:fabric-loader:2.7.11+0.16.5+1.20.1:full"
-	modApi forgifiedFabricApi.module("fabric-api-base", project.fabric_version, true)
-	modApi forgifiedFabricApi.module("fabric-renderer-api-v1", project.fabric_version, true)
-	modApi forgifiedFabricApi.module("fabric-renderer-indigo", project.fabric_version, true)
+	modApi(include(forgifiedFabricApi.module("fabric-api-base", project.fabric_version, true)))
+	modApi(include(forgifiedFabricApi.module("fabric-renderer-api-v1", project.fabric_version, true)))
+	modApi(include(forgifiedFabricApi.module("fabric-renderer-indigo", project.fabric_version, true)))
 
 	modCompileOnly forgifiedFabricApi.module("fabric-block-view-api-v2", project.fabric_version, true)
 
 	compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${project.mixinextras_version}"))
 	implementation(include("io.github.llamalad7:mixinextras-forge:${project.mixinextras_version}"))
-
-	//modImplementation("com.terraformersmc:modmenu:${modmenu_version}") {
-	//	exclude group: 'net.fabricmc.fabric-api'
-	//}
-
-	//modCompileOnly "io.vram:canvas-fabric:${canvas_version}"
 }
 
 processResources {

@@ -1,3 +1,19 @@
+# Constancy
+
+Constancy is an unofficial fork of Continuity, 
+designed to enable Continuity to run natively on Forge (without requiring Sinytra Connector) and 
+to replace redundant FFAPI (ForgifiedFabricAPI) dependencies using Forge API. 
+Please do not report any issues encountered while playing this mod to the original author.
+
+Similar to the reasons for NeoContinuity, 
+Continuity's current Forge support relies on Sinytra Connector and FFAPI (ForgifiedFabricAPI). 
+Introducing Sinytra Connector into the game environment may cause numerous compatibility issues or crashes, 
+and FFAPI modifies network communication, preventing clients from joining servers that do not have FFAPI installed. 
+
+Constancy does not depend on the entire FFAPI (ForgifiedFabricAPI). 
+It only embeds the three packages, `fabric-api-base`, `fabric-renderer-api-v1`, and `fabric-renderer-indigo` 
+using a Jar-in-jar approach within Constancy.
+
 # Continuity
 
 Continuity is a Fabric mod that allows resource packs that use the OptiFine connected textures format, OptiFine emissive textures format (only for blocks and item models), or OptiFine custom block layers format to work without OptiFine.
