@@ -11,7 +11,7 @@ description = '''
 Continuity unofficial Forge port.
 Constancy is a Forge mod that allows resource packs that use the OptiFine connected textures format, OptiFine emissive textures format (only for blocks and item models), or OptiFine custom block layers format to work without OptiFine.
 '''
-logoFile = "assets/continuity/icon.png"
+logoFile = "icon.png"
 logoBlur = false
 authors = "TexTrue, PepperCode1"
 displayURL = "https://github.com/ThinkingStudios/Constancy"
